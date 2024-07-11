@@ -1,6 +1,6 @@
 # Spring Boot With Kubernetes
 
-An Spring Boot Proyect, using Postgres (for Courses) and MySQL (for Users), docker to isolate applications in containers and Kubernetes to handle that containers.
+A Spring Boot Proyect, using Postgres (for Courses) and MySQL (for Users), docker to isolate applications in containers and Kubernetes to handle that containers.
 
 [//]: # (## Screenshots)
 
@@ -40,7 +40,7 @@ To run this project, you will need to modify the application.properties in msvc-
 
 ## Testing
 
-Right click for `MsvcUsuariosApplication` or `MsvcCursosApplication` and run.
+Right click on `MsvcUsuariosApplication` and `MsvcCursosApplication` then run.
 
 ## Authors
 

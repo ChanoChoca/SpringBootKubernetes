@@ -1,6 +1,9 @@
 package org.chanochoca.springcloud.msvc.usuarios.models.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="usuarios")
@@ -10,11 +13,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //@NotEmpty solo para String, en otros casos @NotNull
+    @NotBlank
     private String nombre;
 
+    @NotEmpty
+    @Email
     @Column(unique = true) //Clave subrogada
     private String email;
 
+    @NotBlank
     private String password;
 
     public Usuario() {}
