@@ -15,7 +15,7 @@ import java.util.*;
 //ControllerAdvice (manejar errores)
 public class UsuarioController {
 
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
     @Autowired
     public UsuarioController(UsuarioService usuarioService) {

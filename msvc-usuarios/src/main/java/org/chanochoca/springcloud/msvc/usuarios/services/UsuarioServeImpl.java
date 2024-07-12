@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class UsuarioServeImpl implements UsuarioService {
 
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
     public UsuarioServeImpl(UsuarioRepository usuarioRepository) {
