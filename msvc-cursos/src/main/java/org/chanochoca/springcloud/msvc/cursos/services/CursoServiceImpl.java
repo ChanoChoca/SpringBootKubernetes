@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CursoServiceImpl implements CursoService {
@@ -38,6 +39,28 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    // Se utiliza @Transactional solo lectura cuando son consultas
+    // @Transactional permite mostrar los cambios sincronizados con la tabla
+    public Optional<Curso> porIdConUsuarios(Long id) {
+        Optional<Curso> o = cursoRepository.findById(id);
+        if (o.isPresent()) {
+            Curso curso = o.get();
+            if (!curso.getCursoUsuarios().isEmpty()) {
+                //Por cada objeto de CursoUsuario lo reemplazamos por getUsuarioId,
+                //luego lo convertimos a lista.
+                List<Long> ids = curso.getCursoUsuarios().stream().map(cu -> cu.getUsuarioId())
+                        .collect(Collectors.toList());
+
+                List<Usuario> usuarios = client.obtenerAlumnosPorCurso(ids);
+                curso.setUsuarios(usuarios);
+            }
+            return Optional.of(curso);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     @Transactional
     public Curso guardar(Curso curso) {
         return cursoRepository.save(curso);
@@ -47,6 +70,12 @@ public class CursoServiceImpl implements CursoService {
     @Transactional
     public void elminar(Long id) {
         cursoRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarCursoUsuarioPorId(Long id) {
+        cursoRepository.eliminarCursoUsuarioPorId(id);
     }
 
     @Override

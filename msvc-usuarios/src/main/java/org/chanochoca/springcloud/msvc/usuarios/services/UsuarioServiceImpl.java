@@ -1,5 +1,6 @@
 package org.chanochoca.springcloud.msvc.usuarios.services;
 
+import org.chanochoca.springcloud.msvc.usuarios.clients.CursoClienteRest;
 import org.chanochoca.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.chanochoca.springcloud.msvc.usuarios.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioServeImpl implements UsuarioService {
+public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final CursoClienteRest client;
+
     @Autowired
-    public UsuarioServeImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, CursoClienteRest client) {
         this.usuarioRepository = usuarioRepository;
+        this.client = client;
     }
 
     @Override
@@ -41,6 +45,13 @@ public class UsuarioServeImpl implements UsuarioService {
     @Transactional
     public void eliminar(Long id) {
         usuarioRepository.deleteById(id);
+        client.eliminarCursoUsuarioPorId(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Usuario> listarPorIds(Iterable<Long> ids) {
+        return (List<Usuario>) usuarioRepository.findAllById(ids);
     }
 
     @Override
