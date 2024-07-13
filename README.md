@@ -73,11 +73,11 @@ java -jar .\target\msvc-usuarios-0.0.1-SNAPSHOT.jar
 
 ### Option 2: With Docker
 
-**Note**: Remember to have Docker desktop open.
+**Note**: Remember to have Docker desktop open, also remember. Also remember to be located in the **course-kubernetes folder**.
 
 Before cleaning the target folder, build the Docker image. This is built considering the location of the Dockerfile.
 ``` bash
-docker build -t usuarios .
+docker build -t usuarios . -f .\msvc-usuarios\Dockerfile
 ```
 
 To list the Docker images

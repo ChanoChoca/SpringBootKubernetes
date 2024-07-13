@@ -1,17 +1,47 @@
-# Use the official OpenJDK image from the Docker Hub as the base image
-# https://hub.docker.com/layers/library/openjdk/24/images/sha256-b35661af838fd678573ed7a908915ece18eba919fd9cdfe66ef6521a68a46133?context=explore
-FROM openjdk:24
+# What are layers within images?
+# Each instruction in an image defined in the Dockerfile creates a storable layer
+# cached and these layers are re-usable in image reconstruction.
 
-# Set the working directory inside the container to /app
+# Use the official OpenJDK image from the Docker Hub as the base image
+# https://hub.docker.com/layers/library/openjdk/19-jdk-alpine/images/sha256-a8ac92087e997ddbb21211a57eb0fcb02d10e81edbfb88c451cc021d7f407aae?context=explore
+FROM openjdk:24-slim as builder
+
+# Set the working directory inside the container
+WORKDIR /app/msvc-users
+
+# Copy the pom.xml file from the host to the /app directory in the container
+COPY ./pom.xml /app
+
+# Copy the .mvn directory from the host to the current working directory in the container
+COPY ./msvc-users/.mvn ./.mvn
+
+# Copy the mvnw file from the host to the current working directory in the container
+COPY ./msvc-users/mvnw .
+
+#Copy the pom.xml file from the host to the current working directory in the container
+COPY ./msvc-users/pom.xml .
+
+# Run Maven to clean and package the project without running tests and deleting the target directory
+RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
+# Note: The commented line `RUN ./mvnw dependency:go-offline` is an alternative that downloads most of the dependencies and, when compiling, downloads some additional ones.
+
+#Copy the application source code from the host to the src directory in the container
+COPY ./msvc-users/src ./src
+
+# Run Maven again to clean and package the project, this time without skipping tests
+RUN ./mvnw clean package -DskipTests
+
+# Use a lighter OpenJDK base image for the final container
+FROM openjdk:24-slim
+
+# Set the working directory inside the final container
 WORKDIR /app
 
-# Copy the JAR file from the target directory of your local machine to the working directory inside the container
-# ./target/msvc-usuarios-0.0.1-SNAPSHOT.jar is the path on your local machine
-# . (dot) is the path inside the container, which refers to the current working directory (/app)
-COPY ./target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
+# Copy the JAR file generated from the previous build stage to the current working directory in the final container
+COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 
-# Expose port 8001 to allow external access to the application running inside the container
+# Expose port 8001 to allow application access
 EXPOSE 8001
 
-# Set the entry point to run the JAR file using the java command
-ENTRYPOINT ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]
+# Defines the input command to run the Java application
+ENTRYPOINT ["java", "-jar", "msvc-users-0.0.1-SNAPSHOT.jar"]

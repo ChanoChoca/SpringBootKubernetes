@@ -23,8 +23,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    List<Usuario> listar() {
-        return usuarioService.listar();
+    public Map<String, List<Usuario>> listar() {
+        return Collections.singletonMap("users", usuarioService.listar());
     }
 
     //Ejemplo con PathVariable
