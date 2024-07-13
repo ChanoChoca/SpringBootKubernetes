@@ -42,6 +42,69 @@ To run this project, you will need to modify the application.properties in msvc-
 
 Right click on `MsvcUsuariosApplication` and `MsvcCursosApplication` then run.
 
+## Commands
+
+Move to the Project Directory
+``` bash
+cd msvc-usuarios
+```
+
+To clean the target folder and package the application
+
+When to Clean and Package:
+- After making significant code changes: To ensure that you are working with the latest compiled code.
+- Before deploying: To create a fresh build for deployment.
+- When facing build issues: To troubleshoot by starting with a clean state.
+``` bash
+.\mvnw.cmd clean package
+```
+or
+``` bash
+.\mvnw clean package -DskipTests
+```
+
+### Running the Application
+
+### Option 1: From the local machine
+
+``` bash
+java -jar .\target\msvc-usuarios-0.0.1-SNAPSHOT.jar
+```
+
+### Option 2: With Docker
+
+**Note**: Remember to have Docker desktop open.
+
+Before cleaning the target folder, build the Docker image. This is built considering the location of the Dockerfile.
+``` bash
+docker build -t usuarios .
+```
+
+To list the Docker images
+``` bash
+docker images
+```
+
+To run the Docker image, replace [REPOSITORY or IMAGE ID] with the actual image ID. Replace anyport with the port you want to use
+``` bash
+docker run -p anyport:8001 [REPOSITORY or IMAGE ID]
+```
+
+To list the running containers
+``` bash
+docker ps
+```
+
+To list the stopped containers
+``` bash
+docker ps -a
+```
+
+To stop a running container, replace [CONTAINER ID or NAME] with the actual container ID or name
+``` bash
+docker stop [CONTAINER ID or NAME]
+```
+
 ## Authors
 
 - [@Juan Ignacio Caprioli (ChanoChoca)](https://github.com/ChanoChoca)
