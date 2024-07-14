@@ -98,6 +98,10 @@ or run it with an interactive terminal
 ``` bash
 docker run -p 8001:8001 --rm -it usuarios /bin/sh
 ```
+or run with a created newtork
+``` bash
+docker run -p 8001:8001 -d --rm --name msvc-usuarios --network spring usuarios
+```
 
 To list the running containers
 ``` bash
@@ -181,6 +185,90 @@ docker [image or container] prune
 [//]: # (docker image inspect usuarios)
 
 [//]: # (docker container inspect 2388eeafaab5)
+
+To create a network (network default is bridge)
+``` bash
+docker network create [name]
+```
+
+To list the networks
+``` bash
+docker network ls
+```
+
+To create an image of MySQL with Docker
+``` bash
+docker pull mysql:8.0
+```
+
+To create a container with mysql image:
+The -e indicates that it is an environment variable.
+The -v is used to mount a volume (volumeName:Directory).
+Note: If the container was assigned --rm then --restart=always has no effect.
+``` bash
+docker run -d -p 3307:3306 --name mysql8 --network spring 
+-e MYSQL_ROOT_PASSWORD=chanochoca -e MYSQL_DATABASE=msvc-usuarios 
+-v data-mysql:/var/lib/mysql --restart=always mysql:8.0
+```
+
+To view MySQL container logs.
+``` bash
+docker logs -f mysql
+```
+
+To create an image of MySQL with Docker.
+``` bash
+docker pull postgres:16.3-alpine3.20 
+```
+
+To create a container with mysql image.
+``` bash
+docker run -p 5433:5432 --name postgres16 --network spring 
+-e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=msvc-cursos -d 
+-v data-postgres:/var/lib/postgresql/data --restart=always postgres:16.3-alpine3.20
+```
+
+To start a stopped container.
+``` bash
+docker start [CONTAINER ID or NAME]
+```
+
+Connect to the created mysql instance.
+``` bash
+docker run -it --rm --network spring mysql:8.0 [bash or /bin/bash]
+```
+
+[//]: # (Activity with MySQL and Docker)
+
+[//]: # (show databases;)
+
+[//]: # (use msvc-usuarios)
+
+[//]: # (show tables;)
+
+[//]: # (desc usuarios;)
+
+[//]: # (select * from usuarios;)
+
+Connect to the created postgres instance.
+``` bash
+docker run -it --rm --network spring postgres:16.3-alpine3.20 psql -h postgres16 -U postgres
+```
+
+[//]: # (Activity with PostgreSQL and Docker)
+
+[//]: # (\c msvc-cursos;)
+
+[//]: # (\dt;)
+
+[//]: # (\d+ cursos)
+
+[//]: # (How can a dockerized application communicate with an application on the host machine?)
+
+[//]: # (host.docker.internal allows containers to communicate with the host, )
+
+[//]: # (while 127.0.0.1 or localhost refers to the container itself, not the host.)
+
 
 ## Authors
 
