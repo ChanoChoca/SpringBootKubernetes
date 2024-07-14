@@ -1,0 +1,24 @@
+2024-07-13T20:28:25.900Z  INFO 1 --- [msvc-usuarios] [main] o.c.s.m.u.MsvcUsuariosApplication        : Starting MsvcUsuariosApplication v0.0.1-SNAPSHOT using Java 24-ea with PID 1 (/app/msvc-usuarios-0.0.1-SNAPSHOT.jar started by root in /app)
+2024-07-13T20:28:25.904Z  INFO 1 --- [msvc-usuarios] [main] o.c.s.m.u.MsvcUsuariosApplication        : No active profile set, falling back to 1 default profile: "default"
+2024-07-13T20:28:26.876Z  INFO 1 --- [msvc-usuarios] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-13T20:28:26.929Z  INFO 1 --- [msvc-usuarios] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 1 JPA repository interface.
+2024-07-13T20:28:27.106Z  INFO 1 --- [msvc-usuarios] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=42702706-218e-3fc2-a1c6-b859de223776
+2024-07-13T20:28:27.496Z  INFO 1 --- [msvc-usuarios] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8001 (http)
+2024-07-13T20:28:27.510Z  INFO 1 --- [msvc-usuarios] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-13T20:28:27.511Z  INFO 1 --- [msvc-usuarios] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-13T20:28:27.553Z  INFO 1 --- [msvc-usuarios] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-13T20:28:27.554Z  INFO 1 --- [msvc-usuarios] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1556 ms
+2024-07-13T20:28:27.694Z  INFO 1 --- [msvc-usuarios] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-13T20:28:28.062Z  INFO 1 --- [msvc-usuarios] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@435e416c
+2024-07-13T20:28:28.063Z  INFO 1 --- [msvc-usuarios] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-13T20:28:28.104Z  INFO 1 --- [msvc-usuarios] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-13T20:28:28.152Z  INFO 1 --- [msvc-usuarios] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-13T20:28:28.189Z  INFO 1 --- [msvc-usuarios] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-13T20:28:28.449Z  INFO 1 --- [msvc-usuarios] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-13T20:28:28.522Z  WARN 1 --- [msvc-usuarios] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-07-13T20:28:29.236Z  INFO 1 --- [msvc-usuarios] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-13T20:28:29.285Z  INFO 1 --- [msvc-usuarios] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-13T20:28:29.562Z  INFO 1 --- [msvc-usuarios] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-07-13T20:28:29.993Z  WARN 1 --- [msvc-usuarios] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-07-13T20:28:30.541Z  INFO 1 --- [msvc-usuarios] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8001 (http) with context path '/'
+2024-07-13T20:28:30.559Z  INFO 1 --- [msvc-usuarios] [main] o.c.s.m.u.MsvcUsuariosApplication        : Started MsvcUsuariosApplication in 5.252 seconds (process running for 5.83)

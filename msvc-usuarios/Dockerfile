@@ -7,26 +7,26 @@
 FROM openjdk:24-slim as builder
 
 # Set the working directory inside the container
-WORKDIR /app/msvc-users
+WORKDIR /app/msvc-usuarios
 
 # Copy the pom.xml file from the host to the /app directory in the container
 COPY ./pom.xml /app
 
 # Copy the .mvn directory from the host to the current working directory in the container
-COPY ./msvc-users/.mvn ./.mvn
+COPY ./msvc-usuarios/.mvn ./.mvn
 
 # Copy the mvnw file from the host to the current working directory in the container
-COPY ./msvc-users/mvnw .
+COPY ./msvc-usuarios/mvnw .
 
 #Copy the pom.xml file from the host to the current working directory in the container
-COPY ./msvc-users/pom.xml .
+COPY ./msvc-usuarios/pom.xml .
 
 # Run Maven to clean and package the project without running tests and deleting the target directory
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 # Note: The commented line `RUN ./mvnw dependency:go-offline` is an alternative that downloads most of the dependencies and, when compiling, downloads some additional ones.
 
 #Copy the application source code from the host to the src directory in the container
-COPY ./msvc-users/src ./src
+COPY ./msvc-usuarios/src ./src
 
 # Run Maven again to clean and package the project, this time without skipping tests
 RUN ./mvnw clean package -DskipTests
@@ -36,6 +36,7 @@ FROM openjdk:24-slim
 
 # Set the working directory inside the final container
 WORKDIR /app
+RUN mkdir ./logs
 
 # Copy the JAR file generated from the previous build stage to the current working directory in the final container
 COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
@@ -44,4 +45,4 @@ COPY --from=builder /app/msvc-usuarios/target/msvc-usuarios-0.0.1-SNAPSHOT.jar .
 EXPOSE 8001
 
 # Defines the input command to run the Java application
-ENTRYPOINT ["java", "-jar", "msvc-users-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]

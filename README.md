@@ -79,6 +79,7 @@ Before cleaning the target folder, build the Docker image. This is built conside
 ``` bash
 docker build -t usuarios . -f .\msvc-usuarios\Dockerfile
 ```
+Note: You can add : before name for tag name (Example :v2)
 
 To list the Docker images
 ``` bash
@@ -88,6 +89,14 @@ docker images
 To run the Docker image, replace [REPOSITORY or IMAGE ID] with the actual image ID. Replace anyport with the port you want to use
 ``` bash
 docker run -p anyport:8001 [REPOSITORY or IMAGE ID]
+```
+or run it separately from the terminal (default is attach)
+``` bash
+docker run -d -p anyport:8001 [REPOSITORY or IMAGE ID]
+```
+or run it with an interactive terminal
+``` bash
+docker run -p 8001:8001 --rm -it usuarios /bin/sh
 ```
 
 To list the running containers
@@ -100,10 +109,78 @@ To list the stopped containers
 docker ps -a
 ```
 
+To view logs, replace [CONTAINER ID or NAME] with the actual container ID or name
+``` bash
+docker logs [CONTAINER ID or NAME]
+```
+
 To stop a running container, replace [CONTAINER ID or NAME] with the actual container ID or name
 ``` bash
 docker stop [CONTAINER ID or NAME]
 ```
+
+To remove a container when it stops
+``` bash
+docker run -p 8001:8001 -d --rm usuarios
+```
+To remove a stopped container or image
+``` bash
+docker rm [CONTAINER ID or NAME] | docker rmi [REPOSITORY or IMAGE ID]
+```
+To remove a list of stopped containers or images
+``` bash
+docker [image or container] prune
+```
+
+[//]: # (First activity: use cp to move files to/from the container)
+
+
+[//]: # (In downloads folder:)
+
+[//]: # (docker cp .\Login.java af16832d7811:/app/Login.java)
+
+[//]: # (Inside container running with -it:)
+
+[//]: # (su -)
+
+[//]: # (apt-get update)
+
+[//]: # (apt-get install nano)
+
+[//]: # (exit)
+
+[//]: # (To view and/or edit file in linux container:)
+
+[//]: # (nano Login.java)
+
+[//]: # (To execute the file Login.java:)
+
+[//]: # (javac Login.java)
+
+[//]: # (java Login)
+
+
+[//]: # (In downloads folder:)
+
+[//]: # (docker cp 02a62c7b7b2d:/app/Login.java .\Login2.java)
+
+[//]: # (You can see the Login2.java file in downloads)
+
+
+[//]: # (To copy logs in the container and paste in the downloads folder:)
+
+[//]: # (docker run -p 8001:8001 --rm -d usuarios)
+
+[//]: # (docker logs 2388)
+
+[//]: # (docker cp 2388eeafaab5:/app/logs .\logs)
+
+
+[//]: # (To inspect the container or image: )
+
+[//]: # (docker image inspect usuarios)
+
+[//]: # (docker container inspect 2388eeafaab5)
 
 ## Authors
 
