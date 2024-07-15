@@ -13,6 +13,7 @@ A Spring Boot Proyect, using Postgres (for Courses) and MySQL (for Users), docke
 [//]: # ()
 [//]: # (![WoT App Screenshot]&#40;images/img-cart.png&#41;)
 
+
 ## Tools Used
 
 - Spring Boot
@@ -102,6 +103,11 @@ or run with a created newtork
 ``` bash
 docker run -p 8001:8001 -d --rm --name msvc-usuarios --network spring usuarios
 ```
+or run with a .env file
+``` bash
+docker run -p 8001:8001 --env-file .\msvc-usuarios\.env -d --rm --name msvc-usuarios --network spring usuarios
+```
+
 
 To list the running containers
 ``` bash
@@ -129,7 +135,7 @@ docker run -p 8001:8001 -d --rm usuarios
 ```
 To remove a stopped container or image
 ``` bash
-docker rm [CONTAINER ID or NAME] | docker rmi [REPOSITORY or IMAGE ID]
+docker rm [CONTAINER ID or NAME] or docker rmi [REPOSITORY or IMAGE ID]
 ```
 To remove a list of stopped containers or images
 ``` bash
@@ -179,14 +185,12 @@ docker [image or container] prune
 
 [//]: # (docker cp 2388eeafaab5:/app/logs .\logs)
 
+To inspect the container or image.
+``` bash
+docker [image or container] inspect [REPOSITORY or IMAGE ID or CONTAINER ID or NAME]
+```
 
-[//]: # (To inspect the container or image: )
-
-[//]: # (docker image inspect usuarios)
-
-[//]: # (docker container inspect 2388eeafaab5)
-
-To create a network (network default is bridge)
+To create a network (network default is bridge).
 ``` bash
 docker network create [name]
 ```
@@ -268,7 +272,6 @@ docker run -it --rm --network spring postgres:16.3-alpine3.20 psql -h postgres16
 [//]: # (host.docker.internal allows containers to communicate with the host, )
 
 [//]: # (while 127.0.0.1 or localhost refers to the container itself, not the host.)
-
 
 ## Authors
 
