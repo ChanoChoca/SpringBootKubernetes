@@ -74,7 +74,7 @@ java -jar .\target\msvc-usuarios-0.0.1-SNAPSHOT.jar
 
 ### Option 2: With Docker
 
-**Note**: Remember to have Docker desktop open, also remember. Also remember to be located in the **course-kubernetes folder**.
+**Note**: Remember to have Docker desktop open. Also remember to be located in the **course-kubernetes folder**.
 
 Before cleaning the target folder, build the Docker image. This is built considering the location of the Dockerfile.
 ``` bash
@@ -210,9 +210,7 @@ The -e indicates that it is an environment variable.
 The -v is used to mount a volume (volumeName:Directory).
 Note: If the container was assigned --rm then --restart=always has no effect.
 ``` bash
-docker run -d -p 3307:3306 --name mysql8 --network spring 
--e MYSQL_ROOT_PASSWORD=chanochoca -e MYSQL_DATABASE=msvc-usuarios 
--v data-mysql:/var/lib/mysql --restart=always mysql:8.0
+docker run -d -p 3307:3306 --name mysql8 --network spring -e MYSQL_ROOT_PASSWORD=chanochoca -e MYSQL_DATABASE=msvc-usuarios -v data-mysql:/var/lib/mysql --restart=always mysql:8.0
 ```
 
 To view MySQL container logs.
@@ -227,9 +225,7 @@ docker pull postgres:16.3-alpine3.20
 
 To create a container with mysql image.
 ``` bash
-docker run -p 5433:5432 --name postgres16 --network spring 
--e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=msvc-cursos -d 
--v data-postgres:/var/lib/postgresql/data --restart=always postgres:16.3-alpine3.20
+docker run -p 5433:5432 --name postgres16 --network spring -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=msvc-cursos -d -v data-postgres:/var/lib/postgresql/data --restart=always postgres:16.3-alpine3.20
 ```
 
 To start a stopped container.
@@ -272,6 +268,36 @@ docker run -it --rm --network spring postgres:16.3-alpine3.20 psql -h postgres16
 [//]: # (host.docker.internal allows containers to communicate with the host, )
 
 [//]: # (while 127.0.0.1 or localhost refers to the container itself, not the host.)
+
+To execute docker-compose.yaml
+``` bash
+docker-compose up -d
+```
+
+To delete all running containers except the images
+``` bash
+docker-compose down
+```
+
+To delete all running containers with images
+``` bash
+docker-compose down -v
+```
+
+To alias an image
+``` bash
+docker tag curso-kubernetes-msvc-usuarios chanochoca/usuarios
+```
+
+To send the image to dockerhub
+``` bash
+docker push chanochoca/usuarios
+```
+
+To receive the image from dockerhub
+``` bash
+docker pull chanochoca/usuarios
+```
 
 ## Authors
 

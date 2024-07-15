@@ -1,0 +1,72 @@
+version: "3.9"
+services:
+  mysql8:
+    container_name: mysql8
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: chanochoca
+      MYSQL_DATABASE: msvc-usuarios
+    volumes:
+      - data-mysql:/var/lib/mysql
+    restart: always
+#    networks is optional
+    networks:
+      - spring
+
+  postgres16:
+    container_name: postgres16
+    image: postgres:16.3-alpine3.20
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: msvc-cursos
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - spring
+
+  msvc-usuarios:
+    container_name: msvc-usuarios
+    image: chanochoca/usuarios:latest
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-usuarios/Dockerfile
+    ports:
+      - "8001:8001"
+    env_file: ./msvc-usuarios/.env
+    networks:
+      - spring
+    depends_on:
+      - mysql8
+    restart: always
+
+  msvc-cursos:
+    container_name: msvc-cursos
+    image: chanochoca/cursos:latest
+#    build:
+#      context: ./
+#      dockerfile: ./msvc-cursos/Dockerfile
+    ports:
+      - "8002:8002"
+    env_file:
+      - ./msvc-cursos/.env
+    networks:
+      - spring
+    depends_on:
+      - postgres16
+      - msvc-usuarios
+    restart: always
+
+volumes:
+  data-mysql:
+    name: data-mysql
+  data-postgres:
+    name: data-postgres
+
+networks:
+  spring:
+    external: true
