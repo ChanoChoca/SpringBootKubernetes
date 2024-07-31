@@ -55,5 +55,6 @@ ENV PORT $PORT_APP
 # Expose port 8001 to allow application access
 EXPOSE $PORT
 
+#CMD sleep 20 && java -jar msvc-usuarios-0.0.1-SNAPSHOT.jar
 # Defines the input command to run the Java application
 CMD ["java", "-jar", "msvc-usuarios-0.0.1-SNAPSHOT.jar"]

@@ -1,0 +1,45 @@
+# Definición de la API y versión utilizada
+apiVersion: apps/v1
+
+# Especifica que este archivo describe un objeto de tipo Deployment
+kind: Deployment
+
+# Metadatos asociados al Deployment
+metadata:
+  # Nombre del Deployment
+  name: postgres16
+
+# Especificaciones del Deployment
+spec:
+  # Número de réplicas (instancias) del pod que se desea ejecutar
+  replicas: 1
+
+  # Selector para identificar los pods gestionados por este Deployment
+  selector:
+    matchLabels:
+      # Etiqueta utilizada para identificar los pods de este Deployment
+      role: postgres
+
+  # Plantilla para la configuración de los pods
+  template:
+    metadata:
+      # Etiquetas aplicadas a los pods
+      labels:
+        role: postgres
+
+    # Especificaciones de los contenedores dentro del pod
+    spec:
+      containers:
+        - name: postgres16 # Nombre del contenedor
+          image: postgres:16.3-alpine3.20 # Imagen de Docker utilizada para el contenedor
+
+          # Puertos expuestos por el contenedor
+          ports:
+            - containerPort: 5432 # Puerto de PostgreSQL
+
+          # Variables de entorno para la configuración del contenedor
+          env:
+            - name: POSTGRES_PASSWORD
+              value: postgres # Contraseña del usuario 'postgres'
+            - name: POSTGRES_DB
+              value: msvc-cursos # Nombre de la base de datos a crear

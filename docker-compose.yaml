@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mysql8:
     container_name: mysql8
-    image: mysql:8.0
+    image: mysql:8
     ports:
       - "3307:3306"
     environment:
@@ -69,4 +69,4 @@ volumes:
 
 networks:
   spring:
-    external: true
+    name: spring

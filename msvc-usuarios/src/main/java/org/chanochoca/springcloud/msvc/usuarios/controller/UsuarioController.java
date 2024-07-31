@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.chanochoca.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.chanochoca.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,9 +19,18 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    private final ApplicationContext context;
+
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, ApplicationContext applicationContext) {
         this.usuarioService = usuarioService;
+        this.context = applicationContext;
+    }
+
+    //Para simular una caída de aplicación
+    @GetMapping("/crash")
+    public void crash() {
+        ((ConfigurableApplicationContext)context).close();
     }
 
     @GetMapping
