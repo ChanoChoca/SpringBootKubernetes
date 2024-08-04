@@ -43,3 +43,10 @@ spec:
               value: postgres # Contraseña del usuario 'postgres'
             - name: POSTGRES_DB
               value: msvc-cursos # Nombre de la base de datos a crear
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: data-postgres
+      volumes:
+        - name: data-postgres
+          persistentVolumeClaim:
+            claimName: postgres-pvc
