@@ -40,10 +40,15 @@ spec:
           # Variables de entorno para la configuración del contenedor
           env:
             - name: POSTGRES_PASSWORD
-              value: postgres # Contraseña del usuario 'postgres'
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: msvc-cursos
             - name: POSTGRES_DB
-              value: msvc-cursos # Nombre de la base de datos a crear
-
+              valueFrom:
+                configMapKeyRef:
+                  key: database
+                  name: msvc-cursos
           # Montajes de volúmenes para persistencia de datos
           volumeMounts:
             - mountPath: /var/lib/postgresql/data

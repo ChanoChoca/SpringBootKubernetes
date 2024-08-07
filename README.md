@@ -39,15 +39,6 @@ To run this project, you will need to modify the application.properties in msvc-
 
 `server.port`: Modify this only if you have problems with the port
 
-## Nota:
-Si quieres emitir endpoints desde Postman, no vas a poder debido a que los svc-cursos y svc-usuarios son de tipo LoadBalancer.
-Debes establecer un túnel entre tu maquina local y el puerto de servicio para permitir esto:
-``` bash
-kubectl port-forward service/msvc-cursos 8002:8002
-```
-``` bash
-kubectl port-forward service/msvc-usuarios 8001:8001
-```
 
 ## Authors
 

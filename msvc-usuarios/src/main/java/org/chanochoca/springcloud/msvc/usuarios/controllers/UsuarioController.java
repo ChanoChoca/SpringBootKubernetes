@@ -1,4 +1,4 @@
-package org.chanochoca.springcloud.msvc.usuarios.controller;
+package org.chanochoca.springcloud.msvc.usuarios.controllers;
 
 import jakarta.validation.Valid;
 import org.chanochoca.springcloud.msvc.usuarios.models.entity.Usuario;
@@ -6,6 +6,7 @@ import org.chanochoca.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,10 +22,13 @@ public class UsuarioController {
 
     private final ApplicationContext context;
 
+    private final Environment env;
+
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, ApplicationContext applicationContext) {
+    public UsuarioController(UsuarioService usuarioService, ApplicationContext applicationContext, Environment env) {
         this.usuarioService = usuarioService;
         this.context = applicationContext;
+        this.env = env;
     }
 
     //Para simular una caída de aplicación
@@ -34,8 +38,13 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public Map<String, List<Usuario>> listar() {
-        return Collections.singletonMap("users", usuarioService.listar());
+    public ResponseEntity<?> listar() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("users", usuarioService.listar());
+        body.put("pod_info", env.getProperty("MY_POD_NAME") + ": " + env.getProperty("MY_POD_IP"));
+        body.put("texto", env.getProperty("config.texto"));
+//        return Collections.singletonMap("users", service.listar());
+        return ResponseEntity.ok(body);
     }
 
     //Ejemplo con PathVariable
@@ -46,7 +55,7 @@ public class UsuarioController {
     public ResponseEntity<?> detalle(@PathVariable Long id) {
         Optional<Usuario> usuarioOptional = usuarioService.porId(id);
         if (usuarioOptional.isPresent()) {
-            return ResponseEntity.ok().body(usuarioOptional.get());
+            return ResponseEntity.ok(usuarioOptional.get());
         }
         return ResponseEntity.notFound().build();
     }
@@ -110,7 +119,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarPorIds(ids));
     }
 
-    private static ResponseEntity<Map<String, String>> validar(BindingResult result) {
+    private ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
         result.getFieldErrors().forEach(err -> {
             errores.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());

@@ -12,7 +12,7 @@ metadata:
 # Especificaciones del Deployment
 spec:
   # Número de réplicas (instancias) del pod que se desea ejecutar
-  replicas: 3
+  replicas: 1
 
   # Selector para identificar los pods gestionados por este Deployment
   selector:
@@ -40,14 +40,32 @@ spec:
           # Variables de entorno para la configuración del contenedor
           env:
             - name: PORT
-              value: "8002" # Puerto en el que la aplicación escucha (como variable de entorno)
+              valueFrom:
+                configMapKeyRef:
+                  key: port
+                  name: msvc-cursos
             - name: DB_HOST
-              value: "postgres16:5432" # Dirección y puerto del servidor de base de datos PostgreSQL
+              valueFrom:
+                configMapKeyRef:
+                  key: db_host
+                  name: msvc-cursos
             - name: DB_DATABASE
-              value: msvc-cursos # Nombre de la base de datos a utilizar
+              valueFrom:
+                configMapKeyRef:
+                  name: msvc-cursos
+                  key: database
             - name: DB_USERNAME
-              value: postgres # Nombre de usuario para acceder a la base de datos
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: msvc-cursos
             - name: DB_PASSWORD
-              value: postgres # Contraseña para el usuario de la base de datos
+              valueFrom:
+                secretKeyRef:
+                  name: msvc-cursos
+                  key: password
             - name: USUARIOS_URL
-              value: "msvc-usuarios:8001" # URL del servicio de usuarios
+              valueFrom:
+                configMapKeyRef:
+                  key: usuario_url
+                  name: msvc-cursos
