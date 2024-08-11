@@ -7,26 +7,26 @@
 FROM openjdk:24-slim as builder
 
 # Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /app/msvc-cursos
+WORKDIR /app/msvc-gateway
 
 # Copiar el archivo pom.xml desde el host al directorio /app dentro del contenedor
 COPY ./pom.xml /app
 
 # Copiar el directorio .mvn desde el host al directorio de trabajo actual en el contenedor
-COPY ./msvc-cursos/.mvn ./.mvn
+COPY ./msvc-gateway/.mvn ./.mvn
 
 # Copiar el archivo mvnw desde el host al directorio de trabajo actual en el contenedor
-COPY ./msvc-cursos/mvnw .
+COPY ./msvc-gateway/mvnw .
 
 # Copiar el archivo pom.xml desde el host al directorio de trabajo actual en el contenedor
-COPY ./msvc-cursos/pom.xml .
+COPY ./msvc-gateway/pom.xml .
 
 # Ejecutar Maven para limpiar y empaquetar el proyecto sin ejecutar las pruebas y eliminando el directorio target
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 # Nota: La línea comentada `RUN ./mvnw dependency:go-offline` es una alternativa que descarga la mayoría de las dependencias y, al compilar, descarga algunas adicionales.
 
 # Copiar el código fuente de la aplicación desde el host al directorio src dentro del contenedor
-COPY ./msvc-cursos/src ./src
+COPY ./msvc-gateway/src ./src
 
 # Ejecutar Maven nuevamente para limpiar y empaquetar el proyecto, esta vez sin omitir las pruebas
 RUN ./mvnw clean package -DskipTests
@@ -39,10 +39,10 @@ WORKDIR /app
 RUN mkdir ./logs
 
 # Copiar el archivo JAR generado desde la etapa de construcción previa al directorio de trabajo actual en el contenedor final
-COPY --from=builder /app/msvc-cursos/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/msvc-gateway/target/msvc-gateway-0.0.1-SNAPSHOT.jar .
 
-# Exponer el puerto 8002 para permitir el acceso a la aplicación
-EXPOSE 8002
+# Exponer el puerto 8090 para permitir el acceso a la aplicación
+EXPOSE 8090
 
-# Definir el comando de entrada para ejecutar la aplicación Java
-CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
+# Define el comando de entrada para ejecutar la aplicación Java
+CMD ["java", "-jar", "msvc-gateway-0.0.1-SNAPSHOT.jar"]

@@ -2,6 +2,7 @@ package org.chanochoca.springcloud.msvc.cursos.models.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.chanochoca.springcloud.msvc.cursos.models.Usuario;
 
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
-    @NotBlank
+    @NotEmpty
     private String nombre;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

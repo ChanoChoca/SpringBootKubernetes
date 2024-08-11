@@ -68,7 +68,7 @@ public class CursoServiceImpl implements CursoService {
 
     @Override
     @Transactional
-    public void elminar(Long id) {
+    public void eliminar(Long id) {
         cursoRepository.deleteById(id);
     }
 

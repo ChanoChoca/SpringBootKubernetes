@@ -11,7 +11,7 @@ public interface CursoService {
     Optional<Curso> porId(Long id);
     Optional<Curso> porIdConUsuarios(Long id);
     Curso guardar(Curso curso);
-    void elminar(Long id);
+    void eliminar(Long id);
 
     void eliminarCursoUsuarioPorId(Long id);
 
