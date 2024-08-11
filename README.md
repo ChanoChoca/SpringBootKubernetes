@@ -11,6 +11,7 @@ Un proyecto Spring Boot, que utiliza Postgres (para cursos) y MySQL (para usuari
 3. [Endpoints](#endpoints)
 4. [ReadinessProbe y LivenessProbe](#readinessprobe-y-livenessprobe)
 5. [Estructura del proyecto](#estructura-del-proyecto)
+6. [Diagrama UML](#diagrama-uml)
 
 ## Herramientas usadas
 
@@ -258,6 +259,7 @@ Implementado en `deployment-usuarios.yaml`
 │       
 ├───images
 │       minikube.png
+│       uml.png
 │       
 ├───msvc-cursos
 │   │   .env
@@ -447,6 +449,10 @@ Implementado en `deployment-usuarios.yaml`
                         └───msvc
                                 CursoKubernetesApplicationTests.java
 ```
+
+## Diagrama UML
+
+![Main image](images/uml.png)
 
 ## Authors
 
