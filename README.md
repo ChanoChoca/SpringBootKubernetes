@@ -37,7 +37,7 @@ Luego modificar las contraseñas y usuarios de MySQL y Postgres en el proyecto:
 
 - msvc-usuarios: [application.properties](msvc-usuarios/src/main/resources/application.properties)
 - msvc-cursos: [application.properties](msvc-cursos/src/main/resources/application.properties)
-- contraseñas en base64: [application.properties](secret.yaml)
+- usuarios y contraseñas en base64: [application.properties](secret.yaml)
   - Utiliza un codificador a base64: https://www.base64encode.org/es/
 
 ### El orden de ejecución importa, debes aplicarlos en el orden indicado debajo.
