@@ -40,6 +40,31 @@ Luego modificar las contraseñas y usuarios de MySQL y Postgres en el proyecto:
 - usuarios y contraseñas en base64: [application.properties](secret.yaml)
   - Utiliza un codificador a base64: https://www.base64encode.org/es/
 
+Construir imagenes Docker
+``` bash
+docker build -t usuarios . -f .\msvc-usuarios\Dockerfile
+```
+``` bash
+docker build -t cursos . -f .\msvc-cursos\Dockerfile
+```
+``` bash
+docker build -t gateway . -f .\msvc-gateway\Dockerfile
+```
+
+Etiquetar y subir a imagenes Docker (más info en https://hub.docker.com/)
+``` bash
+docker tag usuarios chanochoca/usuarios:latest
+docker push chanochoca/usuarios:latest
+```
+``` bash
+docker tag cursos chanochoca/cursos:latest
+docker push chanochoca/cursos:latest
+```
+``` bash
+docker tag gateway chanochoca/gateway:latest
+docker push chanochoca/gateway:latest
+```
+
 ### El orden de ejecución importa, debes aplicarlos en el orden indicado debajo.
 
 - Aplicar los PVC y PV (Persistent Volume Claims y Persistent Volume)
@@ -210,26 +235,26 @@ kubectl apply -f .\deployment-usuarios.yaml -f .\deployment-cursos.yaml -f .\gat
     - Estado 204 No Content si se eliminan todos los usuarios correctamente.
     - Estado 404 Not Found si el curso no se encuentra.
 
-  
+
 ## ReadinessProbe y LivenessProbe
 
 Implementado en `deployment-usuarios.yaml`
 
-- readinessProbe: Determina si el pod está listo para recibir tráfico. Si el pod no está listo, Kubernetes no enviará tráfico a él. 
+- readinessProbe: Determina si el pod está listo para recibir tráfico. Si el pod no está listo, Kubernetes no enviará tráfico a él.
   - **path**: Ruta en el endpoint del pod para verificar la preparación.
   - **port**: Puerto en el que se realiza la verificación.
   - **scheme**: Protocolo utilizado para la verificación (HTTP o HTTPS).
   - **initialDelaySeconds**: Tiempo a esperar antes de realizar la primera verificación.
   - **periodSeconds**: Intervalo entre las verificaciones.
   - **timeoutSeconds**: Tiempo máximo para esperar una respuesta.
-  
+
 
 - livenessProbe: Determina si el pod sigue vivo y operativo. Si un pod falla la sonda de vivacidad, Kubernetes lo reiniciará.
   - **path**: Ruta en el endpoint del pod para verificar la vivacidad.
   - **port**: Puerto en el que se realiza la verificación.
   - **scheme**: Protocolo utilizado para la verificación (HTTP o HTTPS).
   - **initialDelaySeconds**: Tiempo a esperar antes de realizar la primera verificación.
-  - **periodSeconds**: Intervalo entre las verificaciones. 
+  - **periodSeconds**: Intervalo entre las verificaciones.
   - **timeoutSeconds**: Tiempo máximo para esperar una respuesta.
 
 ## Estructura del proyecto
@@ -457,13 +482,3 @@ Implementado en `deployment-usuarios.yaml`
 ## Authors
 
 - [@Juan Ignacio Caprioli (ChanoChoca)](https://github.com/ChanoChoca)
-
-## Badges
-
-[//]: # (Add badges from somewhere like: [shields.io]&#40;https://shields.io/&#41;)
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
